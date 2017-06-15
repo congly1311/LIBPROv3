@@ -229,9 +229,16 @@ int TruyXuatQuyen(Quyen v[]) {
 	return dem - 1;
 }
 void CapNhatSach(Sach s[]) {
-	int m;
+	double m;
 	fstream outFile("Sach.DAT", ios::app);
-	cout << "Nhap so luong:"; cin >> m; cin.ignore();
+	cout << "Nhap so luong sach can them: "; cin >> m;
+	while (cin.bad() || m < 0 || m != (int)m) {
+		cin.clear();
+		fflush(stdin);
+		cout << "Nhap so luong sach can them: "; cin >> m;
+	};
+	cin.ignore();
+	cout << "==================================================" << endl;
 	for (int i = 0; i<m; i++) {
 		cout << "Nhap Du lieu Sach thu " << i + 1 << " :" << endl;
 		s[i].nhap();
@@ -404,16 +411,19 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	if (quyen == 0) {
 		system("cls");
+		cout << " ________________________________________" << endl;
+		cout << "|              THEM NGUOI DUNG           |" << endl;
+		cout << "|________________________________________|" << endl;
 		char a;
-		float sl;
+		double sl;
 		int ktra = 0;
 		
-		cout << "Nhap so luong: ";
-		do {
+		cout << "Nhap so luong nguoi dung: "; cin >> sl;
+		while (cin.bad() || sl < 0 || sl != (int)sl) {
 			cin.clear();
 			fflush(stdin);
-			cin >> sl;
-		} while (cin.bad() || sl < 0 || sl != (int)sl);
+			cout << "Nhap so luong nguoi dung: "; cin >> sl;
+		} 
 		cin.ignore();
 		cout << endl;
 		for (int i = 0; i < sl; i++) {
@@ -508,6 +518,9 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	else if (quyen == 1) {
 		system("cls");
+		cout << " ________________________________________" << endl;
+		cout << "|              KHOA NGUOI DUNG           |" << endl;
+		cout << "|________________________________________|" << endl;
 		char cm[13];
 		int i;
 		int tt = 0;
@@ -533,6 +546,9 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	else if (quyen == 2) {
 		system("cls");
+		cout << " ________________________________________" << endl;
+		cout << "|           MO KHOA NGUOI DUNG           |" << endl;
+		cout << "|________________________________________|" << endl;
 		char cm[13];
 		int i;
 		int tt = 0;
@@ -557,7 +573,9 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	else if (quyen == 3) {           //
 		system("cls");
-		cout << "Bang phan quyen hien tai:" << endl;
+		cout << " _________________________________________________________________" << endl;
+		cout << "|                          QUAN LY QUYEN                          |" << endl;
+		cout << "|_________________________________________________________________|" << endl;
 		cout << "__________________________________________________________________" << endl;
 		cout << setw(5) << left << "|MS" << setw(30) << left << "|Ten Quyen" << setw(10) << left << "|Admin" << setw(10) << left << "|Thu thu" << setw(10) << left << "|Doc gia" << "|" << endl;
 		//fstream inFile("Quyen.DAT", ios::in);
@@ -600,6 +618,11 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 						}
 					}
 					cout << "Da sua thanh cong!" << endl;
+					fstream outFile("Quyen.DAT", ios::out);
+					for (int i = 0; i < dem; i++){
+						q[i].ghi(outFile);
+					}
+					outFile.close();
 					Sleep(1311);
 					break;
 		}
@@ -610,7 +633,13 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	else if (quyen == 4) {
 		system("cls");
+		cout << " _________________________________________________________________" << endl;
+		cout << "|                             KHO SACH                            |" << endl;
+		cout << "|_________________________________________________________________|" << endl;
+		cout << endl;
+
 		char ql;
+		cout << "________________________________________________________________________________________________#TUYEN" << endl;
 		cout << setw(5) << left << "Ma so" << setw(30) << left << "Ten sach" << setw(30) << left << "Tac gia" << setw(20) << left << "The loai" << setw(20) << left << "Ngon ngu" << setw(15) << left << "Danh gia" << setw(10) << left << "Trang thai" << endl;
 		int s = TruyXuatSach(sach);
 		for (int i = 0; i < s; i++) {
@@ -623,89 +652,119 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 	}
 
 	//#######Quyen 5. Tim sach ##############################################################################
-	//sua giao dien nghia
 	else if (quyen == 5) {
 		system("cls");
 		double op;
 		fstream inFile("Sach.DAT", ios::in);
 		int s = TruyXuatSach(sach);
-		cout << "_______________________________________________________________________________________" << endl;
-		cout << "|##################################TIM KIEM SACH#######################################|" << endl;
+		cout << " ______________________________________________________________________________________" << endl;
+		cout << "|                                  TIM KIEM SACH                                       |" << endl;
 		cout << "|______________________________________________________________________________________|" << endl;
 		cout << "|                                1. Tim theo ID                                        |" << endl;
 		cout << "|                                2. Tim theo ten sach                                  |" << endl;
 		cout << "|                                3. Tim theo ten tac gia                               |" << endl;
 		cout << "|                                4. Tim theo the loai                                  |" << endl;
 		cout << "|______________________________________________________________________________________|" << endl;
-		do {
+		cout << "Nhap Lua Chon :"; cin >> op;
+		while (op != (int)op) {
 			cin.clear();
 			cin.ignore(80, '\n');
-			cout << "Nhap Lua Chon :";
-		} while (!(cin >> op) || op != (int)op);
+			cout << "Nhap Lua Chon :"; cin >> op;
+		} 
 		cin.ignore();
 		switch ((int)op) {
 		case 1: {
 					system("cls");
+					cout << " ___________________________________________" << endl;
+					cout << "|               TIM SACH THEO ID            |" << endl;
+					cout << "|___________________________________________|" << endl;
 					char id[13];
 					int i;
 					char ql;
 					cout << "Nhap ID sach can tim :"; cin.getline(id,13);
 					for (i = 0; i < s; i++) {
 						if (strcmp(sach[i].ID, id)==0) {
-							cout << setw(5) << left << "Ma so" << setw(30) << left << "Ten sach"
-								<< setw(30) << left << "Tac gia" << setw(20) << left << "The loai"
-								<< setw(20) << left << "Ngon ngu" << setw(15) << left << "Danh gia"
-								<< setw(10) << left << "Trang thai" << endl;
-							cout << setw(5) << left << sach[i].ID << setw(30) << left << sach[i].tensach
-								<< setw(30) << left << sach[i].tentacgia << setw(20) << left << sach[i].theloai
-								<< setw(20) << left << sach[i].ngonngu << setw(15) << left << sach[i].danhgia;
+							cout << " ___________________________________________" << endl;
+							cout << "|                   TIM THAY  !             |" << endl;
+							cout << "|___________________________________________|" << endl;
+							cout << "   Ma So:           " << sach[i].ID << endl;
+							cout << "   Ten Sach:        " << sach[i].tensach << endl;
+							cout << "   Ten tac gia:     " << sach[i].tentacgia << endl;
+							cout << "   The loai:        " << sach[i].theloai << endl;
+							cout << "   Ngon ngu:        " << sach[i].ngonngu << endl;
+							cout << "   Danh gia:        " << sach[i].danhgia << endl;
+							cout << "   Trang thai:      ";
 							cout << setw(15) << left;
 							if (sach[i].trangthai == 1) cout << "Chua muon" << endl;
 							else cout << "Da muon" << endl;
 							break;
 						}
 					}
-					if (i == s) cout << "Khong tim thay ID nay!" << endl;
+					if (i == s) {
+						cout << " ___________________________________________" << endl;
+						cout << "|               KHONG TIM THAY !            |" << endl;
+						cout << "|___________________________________________|" << endl;
+					}
 					system("pause");
 					break;
 		}
 		case 2: {
 					system("cls");
+					cout << " ___________________________________________" << endl;
+					cout << "|             TIM SACH THEO TEN             |" << endl;
+					cout << "|___________________________________________|" << endl;
 					char name[30];
 					int i;
 					char ql;
 					cout << "Nhap ten sach can tim :"; cin.getline(name, 30);
 					for (i = 0; i < s; i++) {
 						if (timkiemchuoi(sach[i].tensach, name) == 1) {
-							cout << setw(5) << left << "Ma so" << setw(30) << left << "Ten sach"
-								<< setw(30) << left << "Tac gia" << setw(20) << left << "The loai"
-								<< setw(20) << left << "Ngon ngu" << setw(15) << left << "Danh gia"
-								<< setw(10) << left << "Trang thai" << endl;
+							cout << " ___________________________________________" << endl;
+							cout << "|                   TIM THAY  !             |" << endl;
+							cout << "|___________________________________________|" << endl;
+							cout << " _________##########################################_________#QUANG_ " << endl;
+							cout << setw(5) << left << "|Ma so" << setw(30) << left << "|Ten sach"
+								<< setw(30) << left << "|Tac gia" << setw(20) << left << "|The loai"
+								<< setw(20) << left << "|Ngon ngu" << setw(15) << left << "|Danh gia"
+								<< setw(10) << left << "|Trang thai" << "|" << endl;
+							cout << "|_____|____________________________________________________________________________|" << endl;
 							for (int j = i; j < s; j++) {
 								if (timkiemchuoi(sach[j].tensach, name) == 1) {
-									cout << setw(5) << left << sach[j].ID << setw(30) << left << sach[j].tensach
-										<< setw(30) << left << sach[j].tentacgia << setw(20) << left << sach[j].theloai
-										<< setw(20) << left << sach[j].ngonngu << setw(15) << left << sach[j].danhgia;
-									cout << setw(15) << left;
-									if (sach[j].trangthai == 1) cout << "Chua muon" << endl;
-									else cout << "Da muon" << endl;
+									cout << "|" << setw(4) << left << sach[j].ID << "|" << setw(29) << left << sach[j].tensach
+										<< "|" << setw(29) << left << sach[j].tentacgia << "|"  << setw(19) << left << sach[j].theloai
+										<< "|" << setw(19) << left << sach[j].ngonngu << "|" << setw(14) << left << sach[j].danhgia;
+									cout << "|" << setw(14) << left;
+									if (sach[j].trangthai == 1) cout << "Chua muon";
+									else cout << "Da muon";
+									cout << "|" << endl;
 								}
 							}
 							break;
 						}
 					}
-					if (i == s) cout << "Khong tim thay Sach nay!" << endl;
+					if (i == s) {
+						cout << " ___________________________________________" << endl;
+						cout << "|               KHONG TIM THAY !            |" << endl;
+						cout << "|___________________________________________|" << endl;
+					}
 					system("pause");
 					break;
 		}
 		case 3: {
 					system("cls");
+					cout << " ___________________________________________" << endl;
+					cout << "|          TIM SACH THEO TEN TAC GIA        |" << endl;
+					cout << "|___________________________________________|" << endl;
 					char name[30];
 					int i;
 					char ql;
 					cout << "Nhap ten Tac gia can tim :"; cin.getline(name, 30);
 					for (i = 0; i < s; i++) {
 						if (timkiemchuoi(sach[i].tentacgia, name) == 1) {
+							cout << "_____________________________________________#QUANG" << endl;
+							cout << " _____________________________________" << endl;
+							cout << "|               TIM THAY              |" << endl;
+							cout << "|_____________________________________|" << endl;
 							cout << setw(5) << left << "Ma so" << setw(30) << left << "Ten sach"
 								<< setw(30) << left << "Tac gia" << setw(20) << left << "The loai"
 								<< setw(20) << left << "Ngon ngu" << setw(15) << left << "Danh gia"
@@ -728,6 +787,7 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 					break;
 		}
 		case 4: {
+					cout << "____________________________#TUYEN" << endl;
 					system("cls");
 					char name[30];
 					int i;
@@ -765,6 +825,10 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	else if (quyen == 6) {
 		system("cls");
+		cout << " ________________________________________" << endl;
+		cout << "|               THEM SACH                |" << endl;
+		cout << "|________________________________________|" << endl;
+		cout << endl;
 		CapNhatSach(sach);
 		m = TruyXuatSach(sach);
 		cout << "Them hoan tat!" << endl;
@@ -784,6 +848,11 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 		for (int i = 0; i < sl2; i++) {
 			if (muonsach[i].IDmuon == ngDung[hientai].sCMND) dem++;
 		}
+		system("cls");
+		cout << " _________________________________________" << endl;
+		cout << "|           DANG KY MUON SACH             |" << endl;
+		cout << "|_________________________________________|" << endl;
+		cout << endl;
 		if (dem != 0) {
 			cout << "Co " << dem << " Sach da muon: " << endl;
 			cout << "____________________________________________________________________________________________________________________________________________________________" << endl;
@@ -816,7 +885,6 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 					case 1: {
 								muonsach[sl2].ID = sl2 + 1;
 								strcpy(muonsach[sl2].IDmuon, ngDung[hientai].sCMND);
-								cout << muonsach[sl2].IDmuon << endl;
 								strcpy(muonsach[sl2].IDsach, sach[i].ID);
 
 
@@ -888,7 +956,10 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 		// nguoi dung hien tai
 		int sl1 = TruyXuatSach(sach);
 		int sl = TruyXuatMuonSach(muonsach);
-
+		system("cls");
+		cout << " _________________________________________" << endl;
+		cout << "|                TRA SACH                 |" << endl;
+		cout << "|_________________________________________|" << endl;
 		char id[13];
 		int dem = 0;
 
@@ -943,6 +1014,9 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 									cout << "Da tra sach!" << endl;
 									int choose;
 									int diem;
+									cout << " _________________________________________" << endl;
+									cout << "|                DANH GIA                 |" << endl;
+									cout << "|_________________________________________|" << endl;
 									cout << "Ban co muon danh gia sach" << endl;
 									cout << "1. Co \n2. Khong" << endl;
 									cout << "Nhap lua chon: ";
@@ -982,6 +1056,10 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	else if (quyen == 9) {
 		//nguoi dung hien tai
+		system("cls");
+		cout << " _________________________________________" << endl;
+		cout << "|                   BALO                  |" << endl;
+		cout << "|_________________________________________|" << endl;
 		int sl = TruyXuatMuonSach(muonsach);
 		cout << "Co " << sl << " Sach da muon: " << endl;
 		cout << "____________________________________________________________________________________________________________________________________________________________" << endl;
@@ -1007,6 +1085,9 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	else if (quyen == 10) {
 		system("cls");
+		cout << " _________________________________________" << endl;
+		cout << "|               DOI MAT KHAU              |" << endl;
+		cout << "|_________________________________________|" << endl;
 		char mkc[20];
 		char mk1[20];
 		char mk2[20];
@@ -1044,6 +1125,10 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 	////########Quyen 11. Xem thong bao ########################################################################
 
 	else if (quyen == 11) {
+		system("cls");
+		cout << " _________________________________________" << endl;
+		cout << "|               THONG BAO                 |" << endl;
+		cout << "|_________________________________________|" << endl;
 		int sl = TruyXuatThongBao(thongbao);
 		fstream inFile("ThongBao.DAT", ios::in);
 		for (int i = 0; i < sl; i++) {
@@ -1052,6 +1137,7 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 		inFile.close();
 		int kt = 0;
 		int op;
+		cout << "_______________________############QUANG" << endl;
 		cout << setw(10) << left << "Ma so" << setw(15) << left << "Nguoi gui" << setw(20) << left << "thoi gian" << setw(100) << left << "tieu de" << endl;
 		for (int i = 0; i < sl; i++) {
 			if (strcmp(ngDung[hientai].sCMND, thongbao[i].IDnhan)==0) {
@@ -1071,7 +1157,11 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 				for (int i = 0; i < sl; i++) {
 					if (strcmp(ngDung[hientai].sCMND, thongbao[i].IDnhan)==0) {
 						if (thongbao[i].IDthongbao == op) {
+							cout << endl;
+							cout << "Chu De: " << thongbao[i].tieude << endl << endl;
+							cout << "Noi Dung: " << endl;
 							cout << thongbao[i].noidung << endl;
+							cout << endl;
 						}
 					}
 				}
@@ -1087,7 +1177,9 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 		char cm[13];
 		int i;
 		int kt = 0;
-
+		cout << " _________________________________________" << endl;
+		cout << "|             RESET MAT KHAU              |" << endl;
+		cout << "|_________________________________________|" << endl;
 		cout << "Nhap so CMND: "; cin >> cm; cin.ignore();
 		for (i = 0; i < m; i++) {
 			if (strcmp(cm, ngDung[i].sCMND)==0) {
@@ -1113,8 +1205,8 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 		int op;
 		fstream inFile("UserData.DAT", ios::in);
 		int m = TruyXuatNgDung(ngDung);
-		cout << "___________________________________________________________________________________________________" << endl;
-		cout << "|,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,TIM KIEM TAI KHOAN,-,-,-,-,-,-,-,-,-,-,-,-,-,-,--,-,-,-,--|" << endl;
+		cout << " _________________________________________________________________________________________________" << endl;
+		cout << "|                                       TIM KIEM TAI KHOAN                                        |" << endl;
 		cout << "|_________________________________________________________________________________________________|" << endl;
 		cout << "|                                         1. Tim theo ID.                                         |" << endl;
 		cout << "|                                         2. Tim theo ten.                                        |" << endl;
@@ -1126,6 +1218,7 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 		switch (op) {
 		case 1: {
 					system("cls");
+					//////////////TUYEN
 					char id[13];
 					int i;
 					char ql;
@@ -1249,7 +1342,7 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 	}
 
 	////##########Quyen 14. Tao thong bao #################################################
-
+	///Ly
 	else if (quyen == 14) {
 		int op;
 		int sl = TruyXuatThongBao(thongbao);
@@ -1524,6 +1617,9 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 		int sl = TruyXuatSach(sach);
 
 		system("cls");
+		cout << " _________________________________________" << endl;
+		cout << "|           SUA THONG TIN SACH            |" << endl;
+		cout << "|_________________________________________|" << endl;
 		char idsach[13];
 		bool timkiem = 0;
 		cout << "Nhap ID sach can sua: ";
@@ -1540,13 +1636,14 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 				cout << "Nhap the loai: ";
 				cin.getline(sach[i].theloai, 20);
 				timkiem = 1;
+				cout << "Da luu thay doi";
 			}
 		}
 		fstream outFile("Sach.DAT", ios::out);
 		for (int i = 0; i < sl; i++) {
 			sach[i].ghi(outFile);
 		}
-		cout << "Da luu thay doi";
+		
 		inFile.close();
 		outFile.close();
 		if (timkiem = 0) cout << "Khong tim thay sach";
@@ -1557,6 +1654,9 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 	////##########//Quyen 16. Xoa sach #################################
 	else if (quyen == 16) {
 		system("cls");
+		cout << " ______________________________________" << endl;
+		cout << "|                XOA SACH              |" << endl;
+		cout << "|______________________________________|" << endl;
 		char id[13];
 		int luachon;
 		bool kt = 0;
@@ -1587,7 +1687,7 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 			}
 		}
 		fstream outFile("Sach.DAT", ios::out);
-		for (int a = 0; a < sl - 1; a++)
+		for (int a = 0; a < sl; a++)
 			sach[a].ghi(outFile);
 		if (kt == 0)cout << "Khong tim thay sach";
 		Sleep(1311);
@@ -1597,19 +1697,24 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	else if (quyen == 17) {
 		system("cls");
+		cout << " ______________________________________" << endl;
+		cout << "|       XEM THONG TIN TAI KHOAN        |" << endl;
+		cout << "|______________________________________|" << endl;
 		int soluong = TruyXuatNgDung(ngDung);
-		cout << "So CMND: " << ngDung[hientai].sCMND << endl;
-		cout << "Ten Nguoi Dung: " << ngDung[hientai].tenNguoiDung << endl;
-		cout << "Ngay Sinh: " << ngDung[hientai].ngaySinh << endl;
-		cout << "Dia Chi: " << ngDung[hientai].diaChi << endl;
-		cout << "Ten Dang Nhap: " << ngDung[hientai].tenDangNhap << endl;
-		cout << "Chuc Vu:";
+		cout << "=====================================================" << endl;
+		cout << "So CMND:          " << ngDung[hientai].sCMND << endl;
+		cout << "Ten Nguoi Dung:   " << ngDung[hientai].tenNguoiDung << endl;
+		cout << "Ngay Sinh:        " << ngDung[hientai].ngaySinh << endl;
+		cout << "Dia Chi:          " << ngDung[hientai].diaChi << endl;
+		cout << "Ten Dang Nhap:    " << ngDung[hientai].tenDangNhap << endl;
+		cout << "Chuc Vu:          ";
 		if (ngDung[hientai].chucVu.admin == 1)cout << "Administration" << endl;
 		else if (ngDung[hientai].chucVu.thuthu == 1)cout << "Thu Thu" << endl;
 		else
 		{
 			cout << "Doc GIa" << endl;
 		};
+		cout << "======================================================" << endl;
 		system("pause");
 	}
 
@@ -1617,6 +1722,9 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 
 	else if (quyen == 18) {
 		system("cls");
+		cout << " ______________________________________" << endl;
+		cout << "|       XEM DANH SACH TAI KHOAN        |" << endl;
+		cout << "|______________________________________|" << endl;
 		char ql;
 		cout << " ____________________________________________________________________________________________________________________" << endl;
 		cout << "|" << setw(13) << left << "So CMND" << "|" << setw(28) << left << "Ho va ten" << "|" << setw(15) << left << "Ngay sinh" << "|" << setw(20) << left << "Dia chi" << "|" << setw(20) << left << "Chuc vu" << "|" << setw(15) << left << "Trang thai" << "|" << endl;
@@ -1637,12 +1745,13 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 	////############Quyen 19. Sua thong tin tai khoan ##########################################################
 	////NGHIA SUA GD
 	else if (quyen == 19) {
+		// QUANG
 		system("cls");
 		int luachon;
 		int sl = TruyXuatNgDung(ngDung);
 		
-		cout << "_____________________________________________________________________________________________________________" << endl;
-		cout << "|.-.-.-.-.-.--.-.-.-.-.-.-.-.-.--.-.-.--.SUA THONG TIN TAI KHOAN.--.-.-..-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-|" << endl;
+		cout << " ___________________________________________________________________________________________________________" << endl;
+		cout << "|                                        SUA THONG TIN TAI KHOAN                                            |" << endl;
 		cout << "|___________________________________________________________________________________________________________|" << endl;
 		cout << "|                                          1. So CMND                                                       |" << endl;
 		cout << "|                                          2. Ten nguoi dung                                                |" << endl;
@@ -1655,6 +1764,10 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 		switch (luachon)
 		{
 		case 1: {
+					system("cls");
+					cout << " ______________________________________" << endl;
+					cout << "|              SUA SO CMND             |" << endl;
+					cout << "|______________________________________|" << endl;
 					cout << "So CMND cu: " << ngDung[hientai].sCMND << endl;
 					cout << "Nhap so CMND moi: ";
 					cin.getline(ngDung[hientai].sCMND,13);
@@ -1796,34 +1909,43 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 		
 		switch (op){
 		case 1:{
-				   int kt = 0;
-				   do {
-					   ShowMenu(ngDung, 0, q, 1);
-					   cout << "Nhap lua chon: "; cin >> op2; cin.ignore();
-					   if (q[op2].Admin == 0) cout << "Ban khong duoc ho tro chuc nang nay!";
-					   else kt = Chucnang(hientai, ngDung, op2, m, q, tdn, sach, muonsach, thongbao, yc);
-				   } while (kt == 0);
-				   return 0;
+				   if (ngDung[hientai].chucVu.admin == 1){
+					   int kt = 0;
+					   do {
+						   ShowMenu(ngDung, 0, q, 1);
+						   cout << "Nhap lua chon: "; cin >> op2; cin.ignore();
+						   if (q[op2].Admin == 0) cout << "Ban khong duoc ho tro chuc nang nay!";
+						   else kt = Chucnang(hientai, ngDung, op2, m, q, tdn, sach, muonsach, thongbao, yc);
+					   } while (kt == 0);
+					   return 0;
+				   }
+				   else cout << "Ban khong co chuc vu nay!" << endl;
 		}
 		case 2:{
-				   int kt = 0;
-				   do {
-					   ShowMenu(ngDung, 0, q, 2);
-					   cout << "Nhap lua chon: "; cin >> op2; cin.ignore();
-					   if (q[op2].ThuThu == 0) cout << "Ban khong duoc ho tro chuc nang nay!";
-					   else kt = Chucnang(hientai, ngDung, op2, m, q, tdn, sach, muonsach, thongbao, yc);
-				   } while (kt == 0);
-				   return 0;
+				   if (ngDung[hientai].chucVu.thuthu == 1){
+					   int kt = 0;
+					   do {
+						   ShowMenu(ngDung, 0, q, 2);
+						   cout << "Nhap lua chon: "; cin >> op2; cin.ignore();
+						   if (q[op2].ThuThu == 0) cout << "Ban khong duoc ho tro chuc nang nay!";
+						   else kt = Chucnang(hientai, ngDung, op2, m, q, tdn, sach, muonsach, thongbao, yc);
+					   } while (kt == 0);
+					   return 0;
+				   }
+				   else cout << "Ban khong co chuc vu nay!" << endl;
 		}
 		case 3:{
-				   int kt = 0;
-				   do {
-					   ShowMenu(ngDung, 0, q, 3);
-					   cout << "Nhap lua chon: "; cin >> op2; cin.ignore();
-					   if (q[op2].DocGia == 0) cout << "Ban khong duoc ho tro chuc nang nay!";
-					   else kt = Chucnang(hientai, ngDung, op2, m, q, tdn, sach, muonsach, thongbao, yc);
-				   } while (kt == 0);
-				   return 0;
+				   if (ngDung[hientai].chucVu.docgia == 1){
+					   int kt = 0;
+					   do {
+						   ShowMenu(ngDung, 0, q, 3);
+						   cout << "Nhap lua chon: "; cin >> op2; cin.ignore();
+						   if (q[op2].DocGia == 0) cout << "Ban khong duoc ho tro chuc nang nay!";
+						   else kt = Chucnang(hientai, ngDung, op2, m, q, tdn, sach, muonsach, thongbao, yc);
+					   } while (kt == 0);
+					   return 0;
+				   }
+				   else cout << "Ban khong co chuc vu nay!" << endl;
 		}
 		}
 		/*do {
@@ -1844,7 +1966,6 @@ int Chucnang(int hientai, NguoiDung ngDung[], int quyen, int &m, Quyen q[], char
 			else ShowMenu(ngDung, chucvu, quyen, 3);
 			Sleep(1311);
 		} while (kt != 1);*/
-		system("pause");
 
 	}
 
@@ -2015,7 +2136,12 @@ int main() {
 				if (quyen[op].ThuThu == 0) cout << "Ban khong duoc ho tro chuc nang nay!";
 				else kt = Chucnang(taikhoanhientai, ngDung, op, m, quyen, tdn, sach, muonsach, thongbao, yc);
 			}
-			else ShowMenu(ngDung, chucvu, quyen, 3);
+			else {
+				ShowMenu(ngDung, chucvu, quyen, 3);
+				cout << "Nhap lua chon: "; cin >> op; cin.ignore();
+				if (quyen[op].DocGia == 0) cout << "Ban khong duoc ho tro chuc nang nay!";
+				else kt = Chucnang(taikhoanhientai, ngDung, op, m, quyen, tdn, sach, muonsach, thongbao, yc);
+			}
 			Sleep(1311);
 		} while (kt != 1);
 	}
